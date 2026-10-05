@@ -187,17 +187,16 @@ open?.addEventListener('click',()=>toggle(true)); close?.addEventListener('click
 </script>
 <!-- Load the Supabase tool -->
 <script src="https://jsdelivr.net"></script>
+<!-- Load Supabase using cdnjs instead of jsdelivr -->
+<script src="https://cloudflare.com"></script>
 
-<!-- Connect your specific database -->
 <script>
-  // Paste your actual keys between the quotation marks below:
-  const SUPABASE_URL = "https://mvwetqwxlypggvagmxho.supabase.co/rest/v1/";
+  const SUPABASE_URL = "https://mvwetqwxlypggvagmxho.supabase.co/rest/v1";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12d2V0cXd4bHlwZ2d2YWdteGhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA5MzQzMDcsImV4cCI6MjEwNjUxMDMwN30.veBT1sDySx3qQBbyJrpEd3y1Ths7qRlmqCJi0bEjNaY";
 
-  // Tell the browser to connect
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  // Make sure this is "window.supabase" to guarantee the tool is ready
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // Test function to prove it works
   async function testDatabaseConnection() {
     const { data, error } = await supabase.from('categories').select('*').limit(1);
     if (error) {
@@ -206,7 +205,11 @@ open?.addEventListener('click',()=>toggle(true)); close?.addEventListener('click
       console.log("YES! Website is now connected to Supabase. Data found:", data);
     }
   }
-  window.onload = testDatabaseConnection;
+
+  // Tells the browser to wait a split second for everything to settle
+  document.addEventListener('DOMContentLoaded', () => {
+    testDatabaseConnection();
+  });
 </script>
 
 </body> </html>
