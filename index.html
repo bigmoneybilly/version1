@@ -185,4 +185,28 @@ const menu=document.getElementById('menu'); const open=document.getElementById('
 function toggle(v){menu.classList.toggle('open',v);document.body.style.overflow=v?'hidden':''}
 open?.addEventListener('click',()=>toggle(true)); close?.addEventListener('click',()=>toggle(false)); dock?.addEventListener('click',()=>toggle(true)); menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggle(false)));
 </script>
-</body></html>
+<!-- Load the Supabase tool -->
+<script src="https://jsdelivr.net"></script>
+
+<!-- Connect your specific database -->
+<script>
+  // Paste your actual keys between the quotation marks below:
+  const SUPABASE_URL = "https://mvwetqwxlypggvagmxho.supabase.co/rest/v1/";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12d2V0cXd4bHlwZ2d2YWdteGhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA5MzQzMDcsImV4cCI6MjEwNjUxMDMwN30.veBT1sDySx3qQBbyJrpEd3y1Ths7qRlmqCJi0bEjNaY";
+
+  // Tell the browser to connect
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Test function to prove it works
+  async function testDatabaseConnection() {
+    const { data, error } = await supabase.from('categories').select('*').limit(1);
+    if (error) {
+      console.log("Supabase Connection Error:", error.message);
+    } else {
+      console.log("YES! Website is now connected to Supabase. Data found:", data);
+    }
+  }
+  window.onload = testDatabaseConnection;
+</script>
+
+</body> </html>
